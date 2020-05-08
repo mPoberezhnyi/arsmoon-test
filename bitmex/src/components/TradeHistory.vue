@@ -7,7 +7,7 @@
 
 <script>
 import { BTable } from 'bootstrap-vue';
-import { WSS_URL, UPDATE_TRADE_HISTORY } from '../constants';
+import { BITMEX_WWS_URL, UPDATE_TRADE_HISTORY } from '../constants';
 
 export default {
   name: 'TradeHistory',
@@ -30,15 +30,19 @@ export default {
     activeSymbol() {
       return this.$store.getters.activeSymbol;
     },
+    isNewSymbol() {
+      return this.symbol !== this.activeSymbol;
+    },
   },
   updated() {
-    if (this.symbol !== this.activeSymbol) {
+    if (this.isNewSymbol) {
       this.symbol = this.activeSymbol;
       if (this.ws) {
         this.ws.send('{"op": "unsubscribe"');
+        this.ws.close();
       }
 
-      this.ws = new WebSocket(WSS_URL);
+      this.ws = new WebSocket(BITMEX_WWS_URL);
       this.ws.onopen = () => {
         this.ws.send(`{"op": "subscribe", "args": "tradeBin1m:${this.symbol}"}`);
         this.ws.onmessage = (response) => {
@@ -51,7 +55,8 @@ export default {
     }
   },
   destroyed() {
-    this.ws.unsubscribe();
+    this.ws.send('{"op": "unsubscribe"');
+    this.ws.close();
   },
 };
 </script>

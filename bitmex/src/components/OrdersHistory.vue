@@ -8,7 +8,7 @@
 
 <script>
 import { BTable } from 'bootstrap-vue';
-import { FETCH_ORDERS_HISTORY, MY_WS_URL, UPDATE_ORDERS_HISTORY } from '../constants';
+import { FETCH_ORDERS_HISTORY, HISTORY_ORDERS_WS_URL, UPDATE_ORDERS_HISTORY } from '../constants';
 
 export default {
   name: 'OrdersHistory',
@@ -19,7 +19,7 @@ export default {
     this.$store.dispatch(FETCH_ORDERS_HISTORY);
   },
   mounted() {
-    this.ws = new WebSocket(MY_WS_URL);
+    this.ws = new WebSocket(HISTORY_ORDERS_WS_URL);
     this.ws.onopen = () => {
       this.ws.send('get orders');
       this.ws.onmessage = (response) => {
@@ -34,6 +34,10 @@ export default {
     ordersList() {
       return this.$store.getters.ordersHistory;
     },
+  },
+  destroyed() {
+    this.ws.send('{"op": "unsubscribe"');
+    this.ws.close();
   },
 };
 </script>

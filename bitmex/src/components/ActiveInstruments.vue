@@ -13,7 +13,7 @@
 <script>
 import { BRow, BCol } from 'bootstrap-vue';
 import {
-  WSS_URL, FETCH_INSTRUMENTS, FETCH_TRADE_HISTORY, UPDATE_INSTRUMENTS,
+  BITMEX_WWS_URL, FETCH_INSTRUMENTS, FETCH_TRADE_HISTORY, UPDATE_INSTRUMENTS,
 } from '../constants';
 
 export default {
@@ -30,7 +30,7 @@ export default {
     this.$store.dispatch(FETCH_INSTRUMENTS);
   },
   mounted() {
-    this.ws = new WebSocket(WSS_URL);
+    this.ws = new WebSocket(BITMEX_WWS_URL);
     this.ws.onopen = () => {
       this.ws.send('{"op": "subscribe", "args": "instrument"}');
       this.ws.onmessage = (response) => {
@@ -54,6 +54,7 @@ export default {
   },
   destroyed() {
     this.ws.send('{"op": "unsubscribe"');
+    this.ws.close();
   },
 };
 </script>
