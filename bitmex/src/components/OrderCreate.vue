@@ -8,7 +8,6 @@
           required
           type="number"
           min="0"
-          placeholder="Enter name"
         ></b-form-input>
       </b-form-group>
       <b-row>

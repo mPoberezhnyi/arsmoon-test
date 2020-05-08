@@ -7,6 +7,7 @@ export const FETCH_INSTRUMENTS = 'fetchInstruments';
 export const FETCH_TRADE_HISTORY = 'fetchTradeHistory';
 export const CREATE_ORDER = 'createOrder';
 export const FETCH_ORDERS_HISTORY = 'fetchOrdersHistory';
+export const UPDATE_ORDERS_HISTORY = 'updateOrdersHistory';
 export const GET_USER_NAME = 'getUserName';
 export const SET_USER_NAME = 'setUserName';
 

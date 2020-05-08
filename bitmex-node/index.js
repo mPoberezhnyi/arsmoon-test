@@ -34,18 +34,13 @@ const start = async () => {
 		webSocketServer.on("connection", ws => {
 			ws.on("message", message => {
 				if (message === 'get orders') {
-					client.addStream('XBTUSD', 'orderBookL2_25', function(data, symbol, tableName) {
+					client.addStream('XBTUSD', 'order', function(data) {
 
 						const jsonData = JSON.stringify(data.slice(0, 100))
 
 						ws.send(jsonData);
-
-						console.log(`Got update for ${tableName}:${symbol}. Current state:\n${JSON.stringify(data).slice(0, 100)}...`);
 					});
 				}
-				// if (message === 'close') {
-				// 	client.on('')
-				// }
 			});
 		});
 

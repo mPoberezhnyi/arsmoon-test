@@ -68,6 +68,33 @@ export default {
       state.ordersHistory = payload;
     }
   },
+  updateOrdersHistory(state, payload) {
+    payload.forEach((item) => {
+      const idx = state.ordersHistory.findIndex(({ orderID }) => orderID === item.orderID);
+
+      if (idx !== -1) {
+        state.ordersHistory = [
+          ...state.ordersHistory.slice(0, idx),
+          {
+            ...state.ordersHistory[idx],
+            ...{
+              ...item,
+              timestamp: dayjs(item.timestamp).format('HH:mm:ss DD.MM.YYYY'),
+            },
+          },
+          ...state.ordersHistory.slice(idx + 1),
+        ];
+      } else {
+        state.ordersHistory = [
+          ...state.ordersHistory,
+          {
+            ...item,
+            timestamp: dayjs(item.timestamp).format('HH:mm:ss DD.MM.YYYY'),
+          },
+        ];
+      }
+    });
+  },
   setActiveSymbol(state, payload) {
     state.activeSymbol = payload;
   },

@@ -8,7 +8,7 @@
 
 <script>
 import { BTable } from 'bootstrap-vue';
-import { FETCH_ORDERS_HISTORY, MY_WS_URL, SET_ORDERS_HISTORY } from '../constants';
+import { FETCH_ORDERS_HISTORY, MY_WS_URL, UPDATE_ORDERS_HISTORY } from '../constants';
 
 export default {
   name: 'OrdersHistory',
@@ -25,7 +25,7 @@ export default {
       this.ws.onmessage = (response) => {
         const { data } = response;
         if (data) {
-          this.$store.commit(SET_ORDERS_HISTORY, JSON.parse(data));
+          this.$store.commit(UPDATE_ORDERS_HISTORY, JSON.parse(data));
         }
       };
     };
