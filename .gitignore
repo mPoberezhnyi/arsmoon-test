@@ -1,0 +1,42 @@
+.DS_Store
+/bitmex/node_modules
+/bitmex/dist
+
+# local env files
+/bitmex/.env.local
+/bitmex/.env.*.local
+
+# Log files
+/bitmex/npm-debug.log*
+/bitmex/yarn-debug.log*
+/bitmex/yarn-error.log*
+
+# Editor directories and files
+/bitmex/.idea
+/bitmex/.vscode
+/bitmex/*.suo
+/bitmex/*.ntvs*
+/bitmex/*.njsproj
+/bitmex/*.sln
+/bitmex/*.sw?
+
+/bitmex-node/node_modules
+
+# local env files
+/bitmex-node/.env.local
+/bitmex-node/.env.*.local
+
+# Log files
+/bitmex-node/npm-debug.log*
+/bitmex-node/yarn-debug.log*
+/bitmex-node/yarn-error.log*
+
+# Editor directories and files
+/bitmex-node/.idea
+/bitmex-node/.vscode
+/bitmex-node/*.suo
+/bitmex-node/*.ntvs*
+/bitmex-node/*.njsproj
+/bitmex-node/*.sln
+/bitmex-node/*.sw?
+
