@@ -1,5 +1,5 @@
 const express = require('express')
-const { PORT, API_KEY, API_SECRET } = require('./constants')
+const { PORT, API_KEY, API_SECRET, WS_POST } = require('./constants')
 const cors = require('cors')
 const BitMEXClient = require('./bitmex')
 const WebSocket = require('ws')
@@ -13,7 +13,7 @@ const client = new BitMEXClient({
 	maxTableLen: 100
 });
 
-const webSocketServer = new WebSocket.Server({port: 5080})
+const webSocketServer = new WebSocket.Server({port: WS_POST})
 
 app.use(cors());
 
@@ -32,15 +32,8 @@ const start = async () => {
 		client.on('initialize', () => console.log('Client initialized, data is flowing.'));
 
 		webSocketServer.on("connection", ws => {
-			ws.on("message", message => {
-				if (message === 'get orders') {
-					client.addStream('XBTUSD', 'order', function(data) {
-
-						const jsonData = JSON.stringify(data.slice(0, 100))
-
-						ws.send(jsonData);
-					});
-				}
+			client.addStream('XBTUSD', 'order', function(data) {
+				ws.send(JSON.stringify(data.slice(0, 100)));
 			});
 		});
 

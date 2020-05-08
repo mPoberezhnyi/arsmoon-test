@@ -31,9 +31,7 @@ export default {
   },
   async createOrder(state, order) {
     try {
-      const response = await axios.post(`${API_URL}/order`, order);
-      console.log('created order =========');
-      console.log(response.data);
+      await axios.post(`${API_URL}/order`, order);
     } catch (e) {
       console.log(e);
     }
