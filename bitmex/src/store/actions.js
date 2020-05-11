@@ -1,12 +1,12 @@
-import axios from 'axios';
+import request from '../request';
 import {
-  API_URL, SET_INSTRUMENTS, SET_ACTIVE_SYMBOL, SET_TRADE_HISTORY, SET_ORDERS_HISTORY, SET_USER_NAME,
+  SET_INSTRUMENTS, SET_ACTIVE_SYMBOL, SET_TRADE_HISTORY, SET_ORDERS_HISTORY, SET_USER_NAME,
 } from '../constants';
 
 export default {
   async getUserName({ commit }) {
     try {
-      const { data } = await axios.get(`${API_URL}/user`);
+      const { data } = await request('GET', '/user');
       commit(SET_USER_NAME, data.username);
     } catch (e) {
       commit(SET_USER_NAME, '');
@@ -14,15 +14,15 @@ export default {
   },
   async fetchInstruments({ commit }) {
     try {
-      const { data } = await axios.get(`${API_URL}/instrument/active`);
-      commit(SET_INSTRUMENTS, [...data]);
+      const { data } = await request('GET', '/instrument/active');
+      commit(SET_INSTRUMENTS, data);
     } catch (e) {
       commit(SET_INSTRUMENTS, []);
     }
   },
   async fetchTradeHistory({ commit }, symbol) {
     try {
-      const { data } = await axios.get(`${API_URL}/trade/bucketed?binSize=1m&partial=false&count=100&reverse=true&symbol=${symbol}`);
+      const { data } = await request('GET', `/trade/bucketed?binSize=1m&partial=false&count=100&reverse=true&symbol=${symbol}`);
       commit(SET_TRADE_HISTORY, [...data]);
       commit(SET_ACTIVE_SYMBOL, symbol);
     } catch (e) {
@@ -31,15 +31,15 @@ export default {
   },
   async createOrder(state, order) {
     try {
-      await axios.post(`${API_URL}/order`, order);
+      await request('POST', '/order', order);
     } catch (e) {
       console.log(e);
     }
   },
   async fetchOrdersHistory({ commit }) {
     try {
-      const { data } = await axios.get(`${API_URL}/order`);
-      commit(SET_ORDERS_HISTORY, [...data]);
+      const { data } = await request('GET', '/order');
+      commit(SET_ORDERS_HISTORY, data);
     } catch (e) {
       commit(SET_ORDERS_HISTORY, []);
     }

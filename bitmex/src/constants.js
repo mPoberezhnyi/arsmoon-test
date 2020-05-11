@@ -1,6 +1,8 @@
-export const API_URL = 'http://localhost:5000/api/v1';
+export const API_URL = '/api/v1';
 export const BITMEX_WWS_URL = 'wss://testnet.bitmex.com/realtime';
-export const HISTORY_ORDERS_WS_URL = 'ws://localhost:5080';
+
+export const API_KEY = '1P3Qp5Gb92g8IdfpFPGjfMp-';
+export const API_SECRET = 'X2kMt3u0TukXXoNnHpFHtoq4tct6p6E1kFYtPiPneD7DyLlZ';
 
 // actions
 export const FETCH_INSTRUMENTS = 'fetchInstruments';
